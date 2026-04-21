@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Lorenzo Stasi</title>
+        <link rel="preload" href="img/lorenzo.jpeg" as="image" type="image/jpeg">
+        <link rel="preload" href="img/lorenzo1.png" as="image" type="image/png">
+        <link rel="preload" href="img/lorenzo2.png" as="image" type="image/png">
+        <link rel="stylesheet" href="style.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <header>
+            <section>
+                <h1 id>Lorenzo Stasi</h1>
+                <div>
+                    <button>Home                </button>
+                    <button>Bio                 </button>
+                    <button>Discografia         </button>
+                    <button>Contatti            </button>
+                </div>
+            </section>
+        </header>      
+        <div id="main_container">
+            
+        </div>
+        <footer>
+            <p>&copy 2026</p>
+        </footer>
+    </body>
+    <script>
+        const bottoni = document.querySelectorAll("button");
+        const container = document.getElementById("main_container");
+        const header = document.querySelector("header");
+        
+        function showHomepage() {
+            container.innerHTML = '';
+
+            //sezione immagine
+            const home_container = document.createElement("div");
+            home_container.id = "home_container";
+
+            const home_image = document.createElement("img");
+            home_image.src = "img/lorenzo.jpeg";
+            home_image.id = "lorenzo_img0";
+            home_image.style.width = "120%";
+            home_image.style.height = "auto";
+            home_image.alt = "lorenzo.jpeg";
+            
+            //sezione articolo
+            const about_container = document.createElement("article");
+            about_container.style.paddingTop = "40%";
+            about_container.style.fontSize = "26px";
+            const title_about = document.createElement("h2");
+            fetch("text/home.txt")
+            .then(response => response.text())
+            .then(text => {
+                const p = document.createElement("p");
+                p.textContent = text;
+                about_container.appendChild(p);
+                });
+
+            title_about.textContent = "ABOUT";
+            about_container.appendChild(title_about);
+
+            home_container.appendChild(home_image);
+            home_container.appendChild(about_container);
+
+            container.appendChild(home_container);
+        }
+
+        function showBio() {
+            container.innerHTML = '';
+
+            //sezione immagine
+            const image_container = document.createElement("div");
+            image_container.classList.add("container");
+
+            const bio_image = document.createElement("img");
+            bio_image.src = "img/lorenzo1.png";
+            bio_image.id = "lorenzo_img1";
+            bio_image.style.width = "45%";
+            bio_image.style.height = "auto";
+            bio_image.alt = "lorenzo.png";
+
+            image_container.appendChild(bio_image);
+            container.appendChild(image_container);
+
+            //sezione articolo
+            const bio_container = document.createElement("article");
+            const title_bio = document.createElement("h2");
+            
+            fetch("text/curriculum.txt")
+                .then(response => response.text())
+                .then(text => {
+                    const paragrafi = text.split('\n\n');
+                    
+                    paragrafi.forEach(paragrafo => {
+                        const p = document.createElement("p");
+                        p.textContent = paragrafo.trim();
+                        bio_container.appendChild(p);
+                    });
+                });
+            
+            title_bio.textContent = "Bio";
+            bio_container.appendChild(title_bio);
+
+            container.appendChild(bio_container);
+        }
+
+        function showDisco() {
+            container.innerHTML = '';
+
+            //sezione immagine
+            const image_container = document.createElement("div");
+            image_container.classList.add("container");
+
+            const bio_image = document.createElement("img");
+            bio_image.src = "img/lorenzo2.png";
+            bio_image.id = "lorenzo_img2";
+            bio_image.style.width = "65%";
+            bio_image.style.height = "auto";
+            bio_image.alt = "lorenzo.png";
+
+            image_container.appendChild(bio_image);
+            container.appendChild(image_container);
+
+            //sezione articolo
+            const disco_container = document.createElement("article");
+            const title_disco = document.createElement("h2");
+
+            fetch("text/discografia.txt")
+                .then(response => response.text())
+                .then(text => {
+                    const dischi = text.split('\n');
+                    const lista = document.createElement("ul");
+                    
+                    dischi.forEach(disco => {
+                        const li = document.createElement("li");
+                        li.textContent = disco.trim();
+                        lista.appendChild(li);
+                    });
+                    
+                    disco_container.appendChild(lista);
+                });
+            
+            title_disco.textContent = "Discografia";
+            disco_container.appendChild(title_disco);
+
+            container.appendChild(disco_container);
+        }
+
+        function showContatti() {
+            container.innerHTML = '';
+
+            //sezione articolo
+            const contatti_container = document.createElement("article");
+            contatti_container.id = "contatti_container";
+            const title_contatti = document.createElement("h2");
+
+            fetch("text/contatti.txt")
+                .then(response => response.text())
+                .then(text => {
+                    const contatti = text.split('\n');
+                    const lista = document.createElement("ul");
+                    
+                    contatti.forEach(contatto => {
+                        const li = document.createElement("li");
+                        li.textContent = contatto.trim();
+                        lista.appendChild(li);
+                    });
+                    
+                    contatti_container.appendChild(lista);
+                });
+
+            title_contatti.textContent = "Contatti";
+            contatti_container.appendChild(title_contatti);
+
+            container.appendChild(contatti_container);
+        }
+
+        bottoni[0].addEventListener("click", showHomepage);
+        bottoni[1].addEventListener("click", showBio);
+        bottoni[2].addEventListener("click", showDisco);
+        bottoni[3].addEventListener("click", showContatti);
+        
+        document.addEventListener("DOMContentLoaded", showHomepage);
+    </script>
+</html>
